@@ -1,0 +1,81 @@
+:root {
+  --correct: #2ac55e;
+  --semi-correct: #eab306;
+  --wrong: #94a3b8;
+  --primary: #e2e8f0;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.board-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.board-cell {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+}
+.keyboard{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+}
+.keyboard-row{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.keyboard-letter{
+    border: 1px solid ;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    background: #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.keyboard-letter:hover{
+    background-color: #c7ccd2;
+}
+.correct,.correct:hover{
+  background-color: var(--correct);
+}
+.semi-correct,.semi-correct:hover{
+  background-color: var(--semi-correct);
+}
+.wrong,.wrong:hover{
+  background-color: var(--wrong);
+}
+
