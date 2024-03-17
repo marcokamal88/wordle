@@ -13,6 +13,7 @@ const getColors = (solution, word) => {
     if (indx > -1 && finalresult[indx] !== "*" && finalresult[indx] !== "+") {
       finalresult[i] = "+";
       finalresult[indx] = "+";
+      console.log(solution[indx]);
     }
   }
   return finalresult.map((letter) => {

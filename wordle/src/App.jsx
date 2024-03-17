@@ -31,8 +31,7 @@ function App() {
         const { key } = e;
         if ((key === "Backspace" || key === "-") && currentWord.length > 0) {
           setCurrentWord((currentRow) => currentRow.slice(0, -1));
-        }
-        if (currentWord.length === 5) {
+        } else if (currentWord.length === 5) {
           if (key !== "Enter" && key !== "+") {
             return;
           } else {
@@ -46,11 +45,14 @@ function App() {
             setCurrentWord("");
             return;
           }
-        }
-        if (key.toUpperCase() >= "A" && key.toUpperCase() <= "Z") {
+        } else if (
+          key.toUpperCase() >= "A" &&
+          key.toUpperCase() <= "Z" &&
+          key.length == 1
+        ) {
           // console.log(keyCode);
           setCurrentWord((currentWord) => currentWord + key.toUpperCase());
-        }
+        } else return;
       }
     },
     [currentRow, currentWord, statu]
