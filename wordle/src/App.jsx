@@ -7,14 +7,15 @@ import Keyboard from "./Keyboard.jsx";
 const merge = (letters, word) => {
   return Array.from(new Set(letters + word)).join("");
 };
-console;
+
 function App() {
   const [solution, setSolution] = useState("");
   const [guesses, setGuesses] = useState(new Array(6).fill(""));
   const [currentWord, setCurrentWord] = useState("");
   const [currentRow, setCurrentRow] = useState(0);
   const [letters, setLetters] = useState("");
-  // const [gameStatues, setGameStatues] = useState('');
+  const [statu, setStatu] = useState("");
+  const [load, setload] = useState("");
 
   const selectWord = () => {
     setSolution(words[Math.floor(Math.random() * words.length)]);
@@ -23,17 +24,18 @@ function App() {
   useEffect(() => {
     selectWord();
   }, []);
+
   const handleKeyDown = useCallback(
     (e) => {
-      let status = document.getElementsByTagName("h1")[0].innerHTML;
-      if (status == "") {
-        const { key, keyCode } = e;
-        if (keyCode === 8 && currentWord.length > 0) {
+      if (statu == "") {
+        const { key } = e;
+        if ((key === "Backspace" || key === "-") && currentWord.length > 0) {
           setCurrentWord((currentRow) => currentRow.slice(0, -1));
         }
         if (currentWord.length === 5) {
-          if (keyCode !== 13) return;
-          else {
+          if (key !== "Enter" && key !== "+") {
+            return;
+          } else {
             setGuesses((guesses) =>
               guesses.map((guess, id) =>
                 id === currentRow ? currentWord : guess
@@ -45,19 +47,13 @@ function App() {
             return;
           }
         }
-        if (keyCode >= 65 && keyCode < 91) {
+        if (key.toUpperCase() >= "A" && key.toUpperCase() <= "Z") {
+          // console.log(keyCode);
           setCurrentWord((currentWord) => currentWord + key.toUpperCase());
         }
-      } else {
-        setInterval(function () {
-          document.getElementsByTagName("h1")[0].innerHTML += ".";
-        }, 1000);
-        setTimeout(function () {
-          location.reload();
-        }, 4000);
       }
     },
-    [currentRow, currentWord]
+    [currentRow, currentWord, statu]
   );
 
   useEffect(() => {
@@ -67,17 +63,24 @@ function App() {
 
   useEffect(() => {
     if (guesses[currentRow - 1] == solution.toUpperCase()) {
-      // console.log("you won");
-      // console.log();
-      document.getElementsByTagName("h1")[0].innerHTML = `you won `;
+      setStatu("you won ");
+      setload("loading...");
+      setTimeout(function () {
+        location.reload();
+      }, 3000);
     }
     if (currentRow > 5) {
-      document.getElementsByTagName("h1")[0].innerHTML = `you lose `;
+      setStatu("you lose ");
+      setload("loading...");
+      setTimeout(function () {
+        location.reload();
+      }, 3000);
     }
-  }, [guesses, currentRow, solution]);
+  }, [guesses, currentRow, solution, statu]);
   return (
     <>
-      <h1></h1>
+      <h1>{statu}</h1>
+      <h3>{load}</h3>
       <div className="app">
         {solution.toUpperCase()}
         <Board
@@ -86,7 +89,12 @@ function App() {
           currentWord={currentWord}
           solution={solution}
         />
-        <Keyboard letters={letters} solution={solution} guesses={guesses} />
+        <Keyboard
+          letters={letters}
+          solution={solution}
+          guesses={guesses}
+          handleKeyDown={handleKeyDown}
+        />
       </div>
     </>
   );

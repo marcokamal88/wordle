@@ -8,7 +8,7 @@ const getColor = (solution, letter, guesses) => {
   return "semi-correct";
 };
 
-const Keyboard = ({ solution, letters, guesses }) => (
+const Keyboard = ({ solution, letters, guesses, handleKeyDown }) => (
   <div className="keyboard">
     {rows.map((row, rowIdx) => (
       <div key={rowIdx} className="keyboard-row">
@@ -16,8 +16,10 @@ const Keyboard = ({ solution, letters, guesses }) => (
           <div
             key={letterIdx}
             className={`keyboard-letter ${
-            letters.includes(letter) && getColor(solution, letter, guesses)}`
-            }>
+              letters.includes(letter) && getColor(solution, letter, guesses)
+            }`}
+            onClick={() => handleKeyDown({ key: letter })}
+          >
             {letter === "+" ? "Enter" : letter === "-" ? "Delete" : letter}
           </div>
         ))}
@@ -29,6 +31,7 @@ Keyboard.propTypes = {
   solution: PropTypes.string,
   letters: PropTypes.string,
   guesses: PropTypes.arrayOf(PropTypes.string),
+  handleKeyDown: PropTypes.func,
 };
 
 export default Keyboard;
